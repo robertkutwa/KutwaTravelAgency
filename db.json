@@ -1,0 +1,52 @@
+{
+    "bookings": [
+      {
+        "id": "KEN20230615-1",
+        "timestamp": "2023-06-15T14:30:00Z",
+        "customer": {
+          "name": "John Doe",
+          "email": "john@example.com",
+          "phone": "+254700123456"
+        },
+        "trip": {
+          "destination": "Maasai Mara",
+          "package": "Luxury Safari",
+          "checkin": "2023-07-15",
+          "checkout": "2023-07-22",
+          "duration": 7,
+          "travelers": {
+            "adults": 2,
+            "children": 1
+          },
+          "accommodation": "Luxury Tented Camp"
+        },
+        "specialRequests": "Vegetarian meals required",
+        "status": "pending",
+        "paymentStatus": "unpaid"
+      },
+      {
+        "id": "KEN20230616-1",
+        "timestamp": "2023-06-16T09:15:00Z",
+        "customer": {
+          "name": "Jane Smith",
+          "email": "jane@example.com",
+          "phone": "+254711987654"
+        },
+        "trip": {
+          "destination": "Diani Beach",
+          "package": "Beach Holiday",
+          "checkin": "2023-08-10",
+          "checkout": "2023-08-17",
+          "duration": 7,
+          "travelers": {
+            "adults": 2,
+            "children": 0
+          },
+          "accommodation": "Beach Resort"
+        },
+        "specialRequests": "Ocean view room preferred",
+        "status": "confirmed",
+        "paymentStatus": "deposit-paid"
+      }
+    ]
+  }

@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="src/style.css">
+    <title>Kutwa Travel Agency - Explore Kenya</title>
+</head>
+<body>
+    <header class="header">
+        <div class="agency-name">Kutwa Travel Agency</div>
+        <div class="tagline">Discover the Magic of Kenya</div>
+    </header>
+    
+    <nav>
+        <ul>
+            <li class="active">
+                <button onclick="scrollToSection('destinations')">Destinations</button>
+            </li>
+            <li>
+                <button onclick="scrollToSection('packages')">Packages</button>
+            </li>
+            <li>
+                <button onclick="scrollToSection('Booking')">Booking</button>
+            </li>
+            <li>
+                <button onclick="scrollToSection('contact')">Contact Us</button>
+            </li>
+        </ul>
+    </nav>
+
+    <main>
+        <section id="destinations">
+            <h2>Kenyan Destinations</h2>
+            <p>Explore our breathtaking destinations across Kenya</p>
+            
+            <div class="carousel-container">
+                <div class="carousel">
+                    <div class="carousel-item active">
+                        <img src="Destinations/Maasai Mara National Reserve.jpeg" alt="Maasai Mara">
+                        <div class="carousel-caption">
+                            <h3>Maasai Mara</h3>
+                            <p>World-famous wildlife reserve</p>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <img src="Destinations/Diani Beach.jpeg" alt="Diani Beach">
+                        <div class="carousel-caption">
+                            <h3>Diani Beach</h3>
+                            <p>Pristine white sand beaches</p>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <img src="Destinations/Mount Kenya.jpeg" alt="Mount Kenya">
+                        <div class="carousel-caption">
+                            <h3>Mount Kenya</h3>
+                            <p>Africa's second highest peak</p>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <img src="Destinations/Amboseli National Park _ Kilimanjaro Herd.jpeg" alt="Amboseli">
+                        <div class="carousel-caption">
+                            <h3>Amboseli</h3>
+                            <p>Elephants with Kilimanjaro backdrop</p>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <img src="Destinations/Lake Nakuru.jpeg" alt="Lake Nakuru">
+                        <div class="carousel-caption">
+                            <h3>Lake Nakuru</h3>
+                            <p>The Wonder that is the Flamingoes </p>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <img src="Lamu Island" alt="Lamu Island">
+                        <div class="carousel-caption">
+                            <h3>Lamu Island</h3>
+                            <p>Historic Swahili town</p>
+                    </div>
+                    <div class="carousel-item">
+                        <img src="Destinations/Tsavo.jpeg" alt="Tsavo National Park">
+                        <div class="carousel-caption">
+                            <h3>Tsavo National Park</h3>
+                            <p>Kenya's largest national park</p>
+                        </div>    
+                    </div>
+                </div>
+                <button class="carousel-control prev" onclick="moveSlide(-1)">❮</button>
+                <button class="carousel-control next" onclick="moveSlide(1)">❯</button>
+                <div class="carousel-indicators"></div>
+            </div>
+        </section>
+
+
+  <section id="packages">
+    <div class="packages-header">
+      <h2>Kenyan Safari Packages</h2>
+      <p>Experience the best of Kenya's wildlife and landscapes with our curated safari adventures</p>
+    </div>
+    
+    <div class="packages-outer-container">
+      <div class="packages-container">
+        <div class="packages-accordion">
+          <a href="#" class="package-item package1">
+            <div class="package-content">
+              <h5>Classic Adventure</h5>
+              <h2>Big 5 Safaris</h2>
+            </div>
+            <div class="package-price">From $2,199</div>
+          </a>
+          <a href="#" class="package-item package2">
+            <div class="package-content">
+              <h5>Kid-Friendly</h5>
+              <h2>Family Safaris</h2>
+            </div>
+            <div class="package-price">From $1,899</div>
+          </a>
+          <a href="#" class="package-item package3">
+            <div class="package-content">
+              <h5>Exclusive</h5>
+              <h2>Hidden Gems</h2>
+            </div>
+            <div class="package-price">From $2,799</div>
+          </a>
+          <a href="#" class="package-item package4">
+            <div class="package-content">
+              <h5>Romantic</h5>
+              <h2>Honeymoon Safaris</h2>
+            </div>
+            <div class="package-price">From $3,299</div>
+          </a>
+          <a href="#" class="package-item package5">
+            <div class="package-content">
+              <h5>Premium</h5>
+              <h2>Luxury Safaris</h2>
+            </div>
+            <div class="package-price">From $4,499</div>
+          </a>
+          <a href="#" class="package-item package5">
+            <div class="package-content">
+              <h5>Premium</h5>
+              <h2>Luxury Safaris</h2>
+            </div>
+            <div class="package-price">From $4,499</div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Book Your Kenyan Adventure</h2>
+    <form id="Booking" class="booking-form">
+      <div class="form-group">
+        <label for="name">Full Name*</label>
+        <input type="text" id="name" required placeholder="John Doe">
+      </div>
+      
+      <div class="form-group">
+        <label for="email">Email*</label>
+        <input type="email" id="email" required placeholder="your@email.com">
+      </div>
+      
+      <div class="form-group">
+        <label for="phone">Phone Number*</label>
+        <input type="tel" id="phone" required placeholder="+254 700 123456">
+      </div>
+      
+      <div class="form-row">
+        <div class="form-group">
+          <label for="destination">Destination*</label>
+          <select id="destination" required>
+            <option value="">Select destination</option>
+            <option>Maasai Mara</option>
+            <option>Diani Beach</option>
+            <option>Amboseli</option>
+            <option>Lake Nakuru</option>
+            <option>Mount Kenya</option>
+            <option>Lamu Island</option>
+            <option>Tsavo National Park</option>
+            <option>Samburu Reserve</option>
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <label for="package">Package Type*</label>
+          <select id="package" required>
+            <option value="">Select package</option>
+            <option>Big 5 Safari</option>
+            <option>Family Safari</option>
+            <option>Luxury Safari</option>
+            <option>Honeymoon Package</option>
+            <option>Beach Holiday</option>
+            <option>Cultural Tour</option>
+          </select>
+        </div>
+      </div>
+      
+      <div class="form-row">
+        <div class="form-group">
+          <label for="checkin">Check-in Date*</label>
+          <input type="date" id="checkin" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="duration">Duration (nights)*</label>
+          <input type="number" id="duration" min="1" max="30" required placeholder="7">
+        </div>
+      </div>
+      
+      <div class="form-row">
+        <div class="form-group">
+          <label for="adults">Adults*</label>
+          <input type="number" id="adults" min="1" max="20" required value="2">
+        </div>
+        
+        <div class="form-group">
+          <label for="children">Children</label>
+          <input type="number" id="children" min="0" max="20" value="0">
+        </div>
+      </div>
+      
+      <div class="form-group">
+        <label for="accommodation">Accommodation Preference</label>
+        <select id="accommodation">
+          <option value="standard">Standard Lodge</option>
+          <option value="luxury">Luxury Tented Camp</option>
+          <option value="resort">Beach Resort</option>
+          <option value="boutique">Boutique Hotel</option>
+          <option value="none">No preference</option>
+        </select>
+      </div>
+      
+      <div class="form-group">
+        <label for="requests">Special Requests</label>
+        <textarea id="requests" rows="4" placeholder="Dietary needs, accessibility requirements, room preferences..."></textarea>
+      </div>
+      
+      <div class="form-footer">
+        <button type="submit" class="submit-btn">Request Booking</button>
+        <p class="form-note">* Required fields. We'll contact you within 24 hours to confirm your booking.</p>
+      </div>
+    </form>
+  
+    <!-- Booking Feedback Section -->
+    <div id="bookingFeedback" class="feedback-container" style="display: none;">
+      <div class="feedback-header">
+        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="#4CAF50">
+          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+        </svg>
+        <h3>Booking Request Received!</h3>
+      </div>
+      
+      <div class="trip-summary">
+        <div class="trip-dates">
+          <span id="fbCheckin">Jun 15, 2023</span> - 
+          <span id="fbCheckout">Jun 22, 2023</span>
+          <span class="trip-duration">(<span id="fbDuration">7</span> nights)</span>
+        </div>
+        
+        <h4 id="fbDestination">Maasai Mara Safari</h4>
+        
+        <div class="trip-details-grid">
+          <div class="detail-item">
+            <span class="detail-label">Package:</span>
+            <span id="fbPackage" class="detail-value">Luxury Safari</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">Travelers:</span>
+            <span id="fbTravelers" class="detail-value">2 adults, 1 child</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">Accommodation:</span>
+            <span id="fbAccommodation" class="detail-value">Luxury Tented Camp</span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="confirmation-message">
+        <p>Thank you, <strong id="fbName">John Doe</strong>! Your booking request has been received.</p>
+        <p>We've sent a confirmation to <strong id="fbEmail">john@example.com</strong> and will contact you within 24 hours to finalize your <strong id="fbDestination2">Maasai Mara</strong> adventure.</p>
+      </div>
+      
+      <div class="status-notice">
+        <div class="status-badge pending">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="#E65100">
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+          </svg>
+          <span>Pending Confirmation</span>
+        </div>
+        <p class="status-note">Your reservation will be confirmed after we verify availability</p>
+      </div>
+      
+      <button id="newBookingBtn" class="secondary-btn">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="#FFFFFF">
+          <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+        </svg>
+        Book Another Adventure
+      </button>
+    </div>
+  </section>
+  
+  <style>
+    .booking-form {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 2rem;
+      background: #f9f9f9;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      transition: all 0.3s ease;
+    }
+    
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+    
+    .form-row {
+      display: flex;
+      gap: 1.5rem;
+    }
+    
+    .form-row .form-group {
+      flex: 1;
+    }
+    
+    label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+      color: #333;
+    }
+    
+    input, select, textarea {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 16px;
+      transition: border 0.3s;
+    }
+    
+    input:focus, select:focus, textarea:focus {
+      border-color: #e67e22;
+      outline: none;
+      box-shadow: 0 0 0 2px rgba(230, 126, 34, 0.2);
+    }
+    
+    .submit-btn {
+      background: #e67e22;
+      color: white;
+      border: none;
+      padding: 14px 24px;
+      font-size: 16px;
+      font-weight: 600;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background 0.3s;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    
+    .submit-btn:hover {
+      background: #d35400;
+    }
+    
+    .form-note {
+      margin-top: 1rem;
+      font-size: 14px;
+      color: #666;
+      text-align: center;
+    }
+    
+    /* Feedback Container Styles */
+    .feedback-container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 2.5rem;
+      background: #f9f9f9;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      text-align: center;
+      animation: fadeIn 0.5s ease;
+    }
+    
+    .feedback-header {
+      margin-bottom: 1.5rem;
+    }
+    
+    .feedback-header svg {
+      margin-bottom: 1rem;
+    }
+    
+    .feedback-header h3 {
+      color: #2E7D32;
+      font-size: 1.8rem;
+      margin: 0.5rem 0;
+    }
+    
+    .trip-summary {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 8px;
+      margin: 1.5rem 0;
+      text-align: left;
+      border-left: 4px solid #e67e22;
+    }
+    
+    .trip-dates {
+      color: #666;
+      font-size: 0.95rem;
+      margin-bottom: 0.5rem;
+    }
+    
+    .trip-duration {
+      color: #999;
+    }
+    
+    .trip-summary h4 {
+      margin: 0 0 1rem 0;
+      color: #333;
+      font-size: 1.4rem;
+    }
+    
+    .trip-details-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+    
+    .detail-item {
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .detail-label {
+      font-size: 0.85rem;
+      color: #666;
+    }
+    
+    .detail-value {
+      font-weight: 600;
+      color: #333;
+      margin-top: 0.2rem;
+    }
+    
+    .confirmation-message {
+      margin: 1.5rem 0;
+      line-height: 1.6;
+      color: #555;
+    }
+    
+    .confirmation-message strong {
+      color: #333;
+    }
+    
+    .status-notice {
+      margin: 1.5rem 0;
+    }
+    
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      font-weight: bold;
+    }
+    
+    .pending {
+      background: #FFF3E0;
+      color: #E65100;
+    }
+    
+    .status-note {
+      font-size: 0.85rem;
+      color: #666;
+      margin-top: 0.5rem;
+    }
+    
+    .secondary-btn {
+      background: #3498db;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background 0.3s;
+      width: 100%;
+      margin-top: 1rem;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    
+    .secondary-btn:hover {
+      background: #2980b9;
+    }
+    
+    @media (max-width: 768px) {
+      .form-row {
+        flex-direction: column;
+        gap: 0;
+      }
+      
+      .booking-form, .feedback-container {
+        padding: 1.5rem;
+      }
+      
+      .trip-details-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+  
+  <script>
+    document.getElementById("Booking").addEventListener("submit", function(event) {
+      event.preventDefault();
+      
+      // Form validation
+      const requiredFields = ['name', 'email', 'phone', 'destination', 'package', 'checkin', 'duration', 'adults'];
+      let isValid = true;
+      
+      requiredFields.forEach(field => {
+        const element = document.getElementById(field);
+        if (!element.value.trim()) {
+          element.style.borderColor = '#e74c3c';
+          isValid = false;
+        } else {
+          element.style.borderColor = '#ddd';
+        }
+      });
+      
+      if (!isValid) {
+        alert("Please fill out all required fields marked with *");
+        return;
+      }
+      
+      // Format dates
+      const checkinDate = new Date(document.getElementById("checkin").value);
+      const duration = parseInt(document.getElementById("duration").value);
+      const checkoutDate = new Date(checkinDate);
+      checkoutDate.setDate(checkoutDate.getDate() + duration);
+      
+      const dateOptions = { year: 'numeric', month: 'short', day: 'numeric' };
+      const adults = document.getElementById("adults").value;
+      const children = document.getElementById("children").value;
+      
+      // Update feedback section
+      document.getElementById("fbName").textContent = document.getElementById("name").value;
+      document.getElementById("fbEmail").textContent = document.getElementById("email").value;
+      document.getElementById("fbDestination").textContent = document.getElementById("destination").value;
+      document.getElementById("fbDestination2").textContent = document.getElementById("destination").value;
+      document.getElementById("fbPackage").textContent = document.getElementById("package").value;
+      document.getElementById("fbCheckin").textContent = checkinDate.toLocaleDateString('en-US', dateOptions);
+      document.getElementById("fbCheckout").textContent = checkoutDate.toLocaleDateString('en-US', dateOptions);
+      document.getElementById("fbDuration").textContent = duration;
+      document.getElementById("fbTravelers").textContent = `${adults} adult${adults > 1 ? 's' : ''}${children > 0 ? `, ${children} child${children > 1 ? 'ren' : ''}` : ''}`;
+      document.getElementById("fbAccommodation").textContent = 
+        document.getElementById("accommodation").options[document.getElementById("accommodation").selectedIndex].text;
+      
+      // Show feedback and hide form
+      document.getElementById("Booking").style.display = "none";
+      document.getElementById("bookingFeedback").style.display = "block";
+      document.getElementById("bookingFeedback").scrollIntoView({ behavior: 'smooth' });
+      
+      // In a real app, you would send data to your server here
+      const formData = {
+        name: document.getElementById("name").value,
+        email: document.getElementById("email").value,
+        phone: document.getElementById("phone").value,
+        destination: document.getElementById("destination").value,
+        package: document.getElementById("package").value,
+        checkin: document.getElementById("checkin").value,
+        duration: duration,
+        adults: adults,
+        children: children,
+        accommodation: document.getElementById("accommodation").value,
+        requests: document.getElementById("requests").value
+      };
+      console.log("Form submitted:", formData);
+    });
+    
+    // New booking button
+    document.getElementById("newBookingBtn").addEventListener("click", function() {
+      document.getElementById("Booking").reset();
+      document.getElementById("Booking").style.display = "block";
+      document.getElementById("bookingFeedback").style.display = "none";
+      document.getElementById("Booking").scrollIntoView({ behavior: 'smooth' });
+    });
+    
+    // Set minimum date to today
+    document.getElementById('checkin').min = new Date().toISOString().split('T')[0];
+  </script>
+        <!-- Rest of your sections remain the same -->
+    </main>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src= "src/index.js"></script>
+</body>
+</html>
