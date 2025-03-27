@@ -1,3 +1,5 @@
+const BASE_URL = "https://my-app-backend-zysq.onrender.com";
+
 document.addEventListener('DOMContentLoaded', function() {
     // Navigation and Scroll Handling
     const navItems = document.querySelectorAll('nav ul li');
@@ -286,3 +288,4 @@ function resetBookingForm() {
     document.getElementById("bookingFeedback").style.display = "none";
     document.getElementById("Booking").scrollIntoView({ behavior: 'smooth' });
 }
+
