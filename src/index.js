@@ -1,47 +1,48 @@
-const BASE_URL = "https://my-app-backend-zysq.onrender.com";
+const BASE_URL = "https://my-app-backend-zysq.onrender.com/api";
 
-// Main Application Class
-class KenyaTravelApp {
+class BookingSystem {
   constructor() {
+    this.bookings = [];
     this.init();
   }
 
   async init() {
-    this.setupEventListeners();
+    this.setupNavigation();
     this.initAnimations();
     this.initCarousel();
+    this.setupBookingForm();
     await this.loadBookings();
+    this.setupOfflineSync();
   }
 
-  setupEventListeners() {
-    // Navigation
-    document.querySelectorAll('nav ul li').forEach(item => {
-      item.addEventListener('click', () => this.handleNavClick(item));
-    });
-
-    window.addEventListener('scroll', () => this.updateActiveNav());
-
-    // Booking Form
-    const bookingForm = document.getElementById('Booking');
-    if (bookingForm) {
-      bookingForm.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        await this.handleBookingSubmit();
+  setupNavigation() {
+    const navItems = document.querySelectorAll('nav ul li');
+    const sections = document.querySelectorAll('section');
+    navItems.forEach(item => {
+      item.addEventListener('click', () => {
+        navItems.forEach(i => i.classList.remove('active'));
+        item.classList.add('active');
+        this.animateNavItem(item);
       });
-
-      // Set minimum date to today
-      document.getElementById('checkin').min = new Date().toISOString().split('T')[0];
-    }
-
-    // New booking button
-    document.getElementById('newBookingBtn')?.addEventListener('click', () => this.resetBookingForm());
-  }
-
-  // Navigation Methods
-  handleNavClick(item) {
-    document.querySelectorAll('nav ul li').forEach(i => i.classList.remove('active'));
-    item.classList.add('active');
-    this.animateNavItem(item);
+    });
+    window.addEventListener('scroll', () => {
+      let current = '';
+      sections.forEach(section => {
+        if (pageYOffset >= (section.offsetTop - 200)) {
+          current = section.getAttribute('id');
+        }
+      });
+      navItems.forEach(item => {
+        item.classList.remove('active');
+        if (
+          item.querySelector('button')
+            .getAttribute('onclick')
+            ?.includes(current)
+        ) {
+          item.classList.add('active');
+        }
+      });
+    });
   }
 
   animateNavItem(item) {
@@ -51,65 +52,24 @@ class KenyaTravelApp {
     );
   }
 
-  updateActiveNav() {
-    const sections = document.querySelectorAll('section');
-    const navItems = document.querySelectorAll('nav ul li');
-    let current = '';
-    
-    sections.forEach(section => {
-      const sectionTop = section.offsetTop;
-      if (pageYOffset >= (sectionTop - 200)) {
-        current = section.getAttribute('id');
-      }
-    });
-    
-    navItems.forEach(item => {
-      item.classList.remove('active');
-      if (item.querySelector('button').getAttribute('onclick').includes(current)) {
-        item.classList.add('active');
-      }
-    });
-  }
-
-  // Animation Methods
   initAnimations() {
-    gsap.from(".agency-name", {
-      y: -50,
-      opacity: 0,
-      duration: 1,
-      ease: "power2.out"
-    });
-
-    gsap.from(".tagline", {
-      y: 20,
-      opacity: 0,
-      duration: 1,
-      delay: 0.3,
-      ease: "power2.out"
-    });
+    gsap.from(".agency-name", { y: -50, opacity: 0, duration: 1, ease: "power2.out" });
+    gsap.from(".tagline", { y: 20, opacity: 0, duration: 1, delay: 0.3, ease: "power2.out" });
   }
 
-  // Carousel Methods
   initCarousel() {
     const carousel = document.querySelector('.carousel');
     if (!carousel) return;
-    
     this.carouselItems = document.querySelectorAll('.carousel-item');
     this.indicatorsContainer = document.querySelector('.carousel-indicators');
     this.currentIndex = 0;
-    
-    // Create indicators
     this.carouselItems.forEach((_, index) => {
       const indicator = document.createElement('span');
       indicator.addEventListener('click', () => this.goToSlide(index));
       this.indicatorsContainer.appendChild(indicator);
     });
-    
-    // Initialize
     this.goToSlide(0);
     this.startCarouselInterval();
-    
-    // Pause on hover
     const carouselContainer = document.querySelector('.carousel-container');
     carouselContainer.addEventListener('mouseenter', () => clearInterval(this.carouselInterval));
     carouselContainer.addEventListener('mouseleave', () => this.startCarouselInterval());
@@ -127,49 +87,39 @@ class KenyaTravelApp {
 
   goToSlide(index) {
     this.currentIndex = index;
-    
     this.carouselItems.forEach(item => item.classList.remove('active'));
     this.carouselItems[index].classList.add('active');
-    
     const indicators = this.indicatorsContainer.querySelectorAll('span');
     indicators.forEach(indicator => indicator.classList.remove('active'));
     indicators[index].classList.add('active');
-    
     document.querySelector('.carousel').style.transform = `translateX(-${index * 100}%)`;
-    
-    gsap.from(this.carouselItems[index], {
-      opacity: 0.5,
-      duration: 0.5,
-      ease: "power2.out"
-    });
+    gsap.from(this.carouselItems[index], { opacity: 0.5, duration: 0.5, ease: "power2.out" });
   }
 
-  // Booking Methods
-  async loadBookings() {
-    try {
-      const response = await fetch(`${BASE_URL}/bookings`);
-      if (!response.ok) throw new Error('Failed to load bookings');
-      this.bookings = await response.json();
-      console.log('Bookings loaded:', this.bookings);
-    } catch (error) {
-      console.error('Error loading bookings:', error);
-      // Fallback to localStorage
-      this.bookings = JSON.parse(localStorage.getItem('kenyaTravelBookings')) || { bookings: [] };
+  setupBookingForm() {
+    const bookingForm = document.getElementById('Booking');
+    if (!bookingForm) return;
+    document.getElementById('checkin').min = new Date().toISOString().split('T')[0];
+    bookingForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      await this.handleBookingSubmit();
+    });
+    const newBookingBtn = document.getElementById('newBookingBtn');
+    if (newBookingBtn) {
+      newBookingBtn.addEventListener('click', () => this.resetBookingForm());
     }
   }
 
   async handleBookingSubmit() {
     const formData = this.getFormData();
-    if (!this.validateForm(formData)) return false;
-    
+    if (!this.validateForm(formData)) return;
+    this.displayLocalBookingFeedback(formData);
     try {
       const booking = await this.createBooking(formData);
       this.showBookingConfirmation(booking);
-      return true;
+      await this.loadBookings();
     } catch (error) {
-      console.error("Booking failed:", error);
       alert("Failed to save booking. Please try again.");
-      return false;
     }
   }
 
@@ -192,7 +142,6 @@ class KenyaTravelApp {
   validateForm(formData) {
     const requiredFields = ['name', 'email', 'phone', 'destination', 'package', 'checkin', 'duration', 'adults'];
     let isValid = true;
-    
     requiredFields.forEach(field => {
       const element = document.getElementById(field);
       if (!formData[field]) {
@@ -202,18 +151,40 @@ class KenyaTravelApp {
         element.style.borderColor = '#ddd';
       }
     });
-    
-    if (!isValid) {
-      alert("Please fill out all required fields marked with *");
-    }
+    if (!isValid) alert("Please fill out all required fields marked with *");
     return isValid;
+  }
+
+  displayLocalBookingFeedback(formData) {
+    const checkinDate = new Date(formData.checkin);
+    const durationNum = parseInt(formData.duration, 10);
+    const checkoutDate = new Date(checkinDate);
+    checkoutDate.setDate(checkinDate.getDate() + durationNum);
+    const dateOptions = { year: 'numeric', month: 'short', day: 'numeric' };
+    document.getElementById("fbName").textContent = formData.name;
+    document.getElementById("fbEmail").textContent = formData.email;
+    document.getElementById("fbDestination").textContent = formData.destination;
+    document.getElementById("fbDestination2").textContent = formData.destination;
+    document.getElementById("fbPackage").textContent = formData.package;
+    document.getElementById("fbCheckin").textContent = checkinDate.toLocaleDateString('en-US', dateOptions);
+    document.getElementById("fbCheckout").textContent = checkoutDate.toLocaleDateString('en-US', dateOptions);
+    document.getElementById("fbDuration").textContent = durationNum;
+    const adults = parseInt(formData.adults, 10);
+    const children = parseInt(formData.children, 10);
+    document.getElementById("fbTravelers").textContent =
+      `${adults} adult${adults > 1 ? 's' : ''}${children > 0 ? `, ${children} child${children > 1 ? 'ren' : ''}` : ''}`;
+    const accomSelect = document.getElementById("accommodation");
+    const accomText = accomSelect.options[accomSelect.selectedIndex].text;
+    document.getElementById("fbAccommodation").textContent = accomText;
+    document.getElementById("Booking").style.display = "none";
+    document.getElementById("bookingFeedback").style.display = "block";
+    document.getElementById("bookingFeedback").scrollIntoView({ behavior: 'smooth' });
   }
 
   async createBooking(formData) {
     const checkinDate = new Date(formData.checkin);
     const checkoutDate = new Date(checkinDate);
-    checkoutDate.setDate(checkoutDate.getDate() + parseInt(formData.duration));
-    
+    checkoutDate.setDate(checkinDate.getDate() + parseInt(formData.duration));
     const booking = {
       id: this.generateBookingId(formData.destination, formData.checkin),
       timestamp: new Date().toISOString(),
@@ -238,63 +209,71 @@ class KenyaTravelApp {
       status: "pending",
       paymentStatus: "unpaid"
     };
+    const response = await fetch(`${BASE_URL}/bookings`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(booking)
+    });
+    if (!response.ok) throw new Error('Server rejected booking');
+    const savedBooking = await response.json();
+    this.saveToLocalStorage(savedBooking);
+    return savedBooking;
+  }
 
+  saveToLocalStorage(booking) {
+    let bookingsData = JSON.parse(localStorage.getItem('kenyaTravelBookings')) || {
+      bookings: [],
+      lastSynced: null
+    };
+    if (!booking.id) booking.id = `OFFLINE-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
+    if (!booking.timestamp) booking.timestamp = new Date().toISOString();
+    bookingsData.bookings.push(booking);
+    localStorage.setItem('kenyaTravelBookings', JSON.stringify(bookingsData));
+    return booking;
+  }
+
+  async loadBookings() {
     try {
-      const response = await fetch(`${BASE_URL}/bookings`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(booking)
+      const response = await fetch(`${BASE_URL}/bookings`);
+      if (!response.ok) throw new Error('Failed to load bookings');
+      this.bookings = await response.json();
+      const localData = JSON.parse(localStorage.getItem('kenyaTravelBookings')) || { bookings: [] };
+      const offlineBookings = localData.bookings.filter(b => b.isOffline);
+      offlineBookings.forEach(offlineBooking => {
+        if (!this.bookings.some(b => b.id === offlineBooking.id)) {
+          this.bookings.push(offlineBooking);
+        }
       });
-
-      if (!response.ok) throw new Error('Server rejected booking');
-      const savedBooking = await response.json();
-      
-      // Update local bookings
-      this.bookings.bookings.push(savedBooking);
-      this.saveToLocalStorage();
-      
-      return savedBooking;
+      this.renderBookings();
     } catch (error) {
-      console.warn("Server save failed, falling back to localStorage", error);
-      this.bookings.bookings.push(booking);
-      this.saveToLocalStorage();
-      return booking;
+      const localData = JSON.parse(localStorage.getItem('kenyaTravelBookings')) || { bookings: [] };
+      this.bookings = localData.bookings;
+      this.renderBookings();
     }
   }
 
-  saveToLocalStorage() {
-    localStorage.setItem('kenyaTravelBookings', JSON.stringify(this.bookings));
-  }
-
-  generateBookingId(destination, date) {
-    const prefix = destination.substring(0, 3).toUpperCase();
-    const dateStr = date.replace(/-/g, '');
-    const randomNum = Math.floor(Math.random() * 90) + 10;
-    return `${prefix}${dateStr}-${randomNum}`;
+  renderBookings() {
+    const container = document.getElementById('bookings-container');
+    if (!container) return;
+    container.innerHTML = this.bookings.map(booking => `
+      <div class="booking-card ${booking.isOffline ? 'offline' : ''}">
+        <h3>${booking.trip.destination} - ${booking.trip.package}</h3>
+        <p><strong>Name:</strong> ${booking.customer.name}</p>
+        <p><strong>Dates:</strong> ${booking.trip.checkin} to ${booking.trip.checkout}</p>
+        <p><strong>Status:</strong> <span class="status-${booking.status}">${booking.status}</span>
+          ${booking.isOffline ? '(Offline - will sync when online)' : ''}</p>
+      </div>
+    `).join('');
   }
 
   showBookingConfirmation(booking) {
-    const dateOptions = { year: 'numeric', month: 'short', day: 'numeric' };
-    const checkinDate = new Date(booking.trip.checkin).toLocaleDateString('en-US', dateOptions);
-    const checkoutDate = new Date(booking.trip.checkout).toLocaleDateString('en-US', dateOptions);
-    
-    document.getElementById("fbName").textContent = booking.customer.name;
-    document.getElementById("fbEmail").textContent = booking.customer.email;
-    document.getElementById("fbDestination").textContent = booking.trip.destination;
-    document.getElementById("fbPackage").textContent = booking.trip.package;
-    document.getElementById("fbCheckin").textContent = checkinDate;
-    document.getElementById("fbCheckout").textContent = checkoutDate;
-    document.getElementById("fbDuration").textContent = booking.trip.duration;
-    document.getElementById("fbTravelers").textContent = 
-      `${booking.trip.travelers.adults} adult${booking.trip.travelers.adults > 1 ? 's' : ''}${
-        booking.trip.travelers.children > 0 ? `, ${booking.trip.travelers.children} child${booking.trip.travelers.children > 1 ? 'ren' : ''}` : ''}`;
-    document.getElementById("fbAccommodation").textContent = booking.trip.accommodation;
-    
-    document.getElementById("Booking").style.display = "none";
-    document.getElementById("bookingFeedback").style.display = "block";
-    document.getElementById("bookingFeedback").scrollIntoView({ behavior: 'smooth' });
+    if (booking.isOffline) {
+      document.getElementById("bookingFeedback").innerHTML += `
+        <p class="offline-notice">Your booking will be synced with our servers when you're back online.</p>
+      `;
+    }
   }
 
   resetBookingForm() {
@@ -304,7 +283,39 @@ class KenyaTravelApp {
     document.getElementById("Booking").scrollIntoView({ behavior: 'smooth' });
   }
 
-  // Utility Methods
+  setupOfflineSync() {
+    window.addEventListener('online', () => this.syncOfflineBookings());
+    if (navigator.onLine) this.syncOfflineBookings();
+  }
+
+  async syncOfflineBookings() {
+    const localData = JSON.parse(localStorage.getItem('kenyaTravelBookings')) || { bookings: [] };
+    const offlineBookings = localData.bookings.filter(b => b.isOffline);
+    if (offlineBookings.length === 0) return;
+    try {
+      for (const booking of offlineBookings) {
+        const response = await fetch(`${BASE_URL}/bookings`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(booking)
+        });
+        if (response.ok) {
+          const index = localData.bookings.findIndex(b => b.id === booking.id);
+          if (index !== -1) delete localData.bookings[index].isOffline;
+        }
+      }
+      localStorage.setItem('kenyaTravelBookings', JSON.stringify(localData));
+      await this.loadBookings();
+    } catch (error) {}
+  }
+
+  generateBookingId(destination, date) {
+    const prefix = destination.substring(0, 3).toUpperCase();
+    const dateStr = date.replace(/-/g, '');
+    const randomNum = Math.floor(Math.random() * 90) + 10;
+    return `${prefix}${dateStr}-${randomNum}`;
+  }
+
   scrollToSection(sectionId) {
     const section = document.getElementById(sectionId);
     window.scrollTo({
@@ -314,7 +325,6 @@ class KenyaTravelApp {
   }
 }
 
-// Initialize the application when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
-  window.app = new KenyaTravelApp();
+  window.bookingSystem = new BookingSystem();
 });
