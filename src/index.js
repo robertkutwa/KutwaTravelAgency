@@ -1,5 +1,6 @@
 const BASE_URL = "https://my-app-backend-zysq.onrender.com";
 
+
 document.addEventListener('DOMContentLoaded', function() {
     // Navigation and Scroll Handling
     const navItems = document.querySelectorAll('nav ul li');
