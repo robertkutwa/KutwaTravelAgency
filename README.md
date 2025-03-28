@@ -29,7 +29,7 @@
  <h3>Installation</h3>
     <ol>
         <li>Clone the repository:
-            <pre><code>git clone https://github.com/yourusername/kutwa-travel.git</code></pre>
+            <pre><code>git clone https://github.com/robertkutwa/KutwaTravelAgency.git</code></pre>
         </li>
         <li>Navigate to the project directory:
             <pre><code>cd kutwa-travel</code></pre>
@@ -76,13 +76,6 @@ kutwa-travel/
     <p>
         This project is licensed under the MIT License - see the <a href="LICENSE">LICENSE</a> file for details.
     </p>
-    
-<h2>🙏 Credits</h2>
-    <ul>
-        <li>Images: <a href="https://unsplash.com/">Unsplash</a>, <a href="https://www.pexels.com/">Pexels</a></li>
-        <li>Icons: <a href="https://fontawesome.com/">Font Awesome</a></li>
-        <li>Animations: <a href="https://greensock.com/gsap/">GSAP</a></li>
-    </ul>
     
  <h2>📧 Contact</h2>
     <p>
